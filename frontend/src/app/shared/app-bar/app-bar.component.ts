@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-bar',
@@ -19,4 +20,10 @@ import { RouterModule } from '@angular/router';
 })
 export class AppBarComponent {
 
+  constructor() {
+    
+    
+  }
+
 }
+
