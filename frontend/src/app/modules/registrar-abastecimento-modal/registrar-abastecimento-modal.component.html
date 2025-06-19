@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Registrar Abastecimento</h2>
+<mat-dialog-content>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="form">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Veículo</mat-label>
+      <mat-select formControlName="veiculo" required>
+        <mat-option *ngFor="let v of veiculos" [value]="v">{{ v }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="data" required />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Tipo de Combustível</mat-label>
+      <mat-select formControlName="tipoCombustivel" required>
+        <mat-option *ngFor="let c of combustiveis" [value]="c">{{ c }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Valor</mat-label>
+      <input matInput type="number" formControlName="valor" required min="0" step="0.01" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Quilometragem</mat-label>
+      <input matInput type="number" formControlName="quilometragem" required min="0" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Motorista</mat-label>
+      <input matInput formControlName="motorista" required />
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Salvar</button>
+      <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</mat-dialog-content>

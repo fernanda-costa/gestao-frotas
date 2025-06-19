@@ -1,0 +1,10 @@
+.acoes-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.acoes-container button {
+  min-width: 220px;
+}

@@ -1,0 +1,43 @@
+<mat-card>
+  <h2>Cadastro de Veículos</h2>
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="formulario">
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Placa</mat-label>
+      <input matInput formControlName="placa" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Modelo</mat-label>
+      <input matInput formControlName="modelo" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo" required>
+        <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Ano</mat-label>
+      <input type="number" matInput formControlName="ano" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Quilometragem Atual</mat-label>
+      <input type="number" matInput formControlName="quilometragem" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="campo">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      {{ editIndex !== null ? 'Atualizar' : 'Cadastrar' }}
+    </button>
+  </form>
+</mat-card>
+

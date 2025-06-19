@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Detalhes do Agendamento</h2>
+
+<mat-dialog-content>
+  <h3>Informações do Agendamento</h3>
+  <p><strong>Data/Hora Início:</strong> {{ agendamento.dataHoraInicio | date:'short' }}</p>
+  <p><strong>Veículo:</strong> {{ agendamento.veiculo }}</p>
+  <p><strong>Destino:</strong> {{ agendamento.destino }}</p>
+  <p><strong>Status Atual:</strong> {{ agendamento.status }}</p>
+
+  <h3>Histórico de Alterações de Status</h3>
+  <mat-list *ngIf="agendamento.historico && agendamento.historico.length > 0; else semHistorico">
+    <mat-list-item *ngFor="let item of agendamento.historico">
+      <p>
+        <strong>{{ item.status }}</strong> - {{ item.dataHora | date:'short' }}<br/>
+        <small>{{ item.observacoes || 'Sem observações' }}</small>
+      </p>
+    </mat-list-item>
+  </mat-list>
+  <ng-template #semHistorico>
+    <p>Não há histórico de alterações.</p>
+  </ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="fechar()">Fechar</button>
+</mat-dialog-actions>

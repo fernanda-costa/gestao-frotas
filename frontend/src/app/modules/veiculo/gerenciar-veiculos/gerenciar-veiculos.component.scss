@@ -1,0 +1,19 @@
+.formulario {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.campo {
+    flex: 1 1 220px;
+    min-width: 200px;
+}
+
+.tabela {
+    margin-top: 2rem;
+}
+
+table {
+    width: 100%;
+}
