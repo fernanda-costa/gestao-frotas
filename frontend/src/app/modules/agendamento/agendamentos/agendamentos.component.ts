@@ -12,6 +12,8 @@ import { MatNativeDateModule } from '@angular/material/core'; // necessário par
 import { MatIconModule } from '@angular/material/icon'; // se quiser ícones
 import { AgendamentoService } from '../../../services/agendamento.service';
 import { Agendamento } from '../../../models/agendamento.model';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-agendamentos',
@@ -27,6 +29,8 @@ import { Agendamento } from '../../../models/agendamento.model';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    MatChipsModule,
+    MatCardModule
   ],
   templateUrl: './agendamentos.component.html',
   styleUrls: ['./agendamentos.component.scss']
@@ -79,4 +83,18 @@ export class AgendamentosComponent {
   registrarManutencao(ag: any) {
     console.log('Registrar manutenção:', ag);
   }
+
+  getStatusColor(status: string): 'primary' | 'accent' | 'warn' {
+    switch (status) {
+      case 'PENDENTE':
+        return 'primary';   // azul
+      case 'EM_USO':
+        return 'accent';    // rosa
+      case 'FINALIZADO':
+        return 'warn';      // vermelho
+      default:
+        return 'primary';
+    }
+  }
+
 }

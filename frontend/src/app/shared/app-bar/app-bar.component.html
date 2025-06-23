@@ -7,7 +7,19 @@
 
     <span class="spacer"></span>
 
-    <a mat-button routerLink="/viagem/agendar">Agendar Viagem</a>
-    <a mat-button routerLink="/veiculos/gerenciar">Veículos</a>
-    <a mat-button routerLink="/motoristas/gerenciar">Motoristas</a>
+    <ng-container *ngIf="auth.tipoUsuario == 'ADMIN'">
+        <a mat-button routerLink="/viagem/agendar">Agendar Viagem</a>
+        <a mat-button routerLink="/veiculos/gerenciar">Veículos</a>
+        <a mat-button routerLink="/motoristas/gerenciar">Motoristas</a>
+    </ng-container>
+
+    <ng-container *ngIf="auth.tipoUsuario == 'MOTORISTA'">
+        <a mat-button routerLink="/viagem/agendar">Agendar Viagem</a>
+        <a mat-button routerLink="/veiculos/gerenciar">Veículos</a>
+        <a mat-button routerLink="/motoristas/gerenciar">Motoristas</a>
+    </ng-container>
+
+    <button mat-icon-button (click)="logout()" matTooltip="Sair">
+        <mat-icon>logout</mat-icon>
+    </button>
 </mat-toolbar>

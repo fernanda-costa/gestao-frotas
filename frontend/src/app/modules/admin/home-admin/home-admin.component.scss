@@ -1,10 +1,19 @@
 .acoes-container {
+  margin: 20px 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  justify-content: center;
 }
 
 .acoes-container button {
-  min-width: 220px;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
 }

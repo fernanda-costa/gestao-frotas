@@ -1,11 +1,25 @@
 .app-toolbar {
+  background-color: #3f6ab5;
+  color: white;
   display: flex;
   justify-content: space-between;
   padding: 0 1rem;
+
+  .mat-icon,
+  a,
+  .mat-button,
+  .mat-icon-button {
+    color: white;
+  }
+
+  a.mat-button {
+    color: white;
+  }
 }
 
 .app-icon {
   margin-right: 0.5rem;
+
 }
 
 .app-title {
@@ -21,5 +35,5 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: inherit; 
+  color: inherit;
 }

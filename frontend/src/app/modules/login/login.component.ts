@@ -6,6 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { Usuario } from '../../models/usuario.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   loginError: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -40,10 +42,14 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
 
       if (email === 'admin@email.com' && password === '123456') {
-        localStorage.setItem('token', 'mocked-jwt-token');
-
+        this.authService.login({ nome: "dmin", "tipo": 'ADMIN', token: "123" } as Usuario);
         this.router.navigate(['/admin']);
-      } else {
+      } else if (email === 'motorista@email.com' && password === '123456') {
+        this.authService.login({ nome: "dmin", "tipo": 'MOTORISTA', token: "123" } as Usuario);
+        this.router.navigate(['/motorista']);
+      }  
+      
+      else {
         this.loginError = 'E-mail ou senha inválidos.';
       }
     } else {
