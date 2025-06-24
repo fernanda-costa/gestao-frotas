@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Finalizar Viagem</h2>
+
+<form [formGroup]="finalizarForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Quilometragem Final</mat-label>
+      <input matInput type="number" formControlName="quilometragemFinal" />
+      <mat-error *ngIf="finalizarForm.get('quilometragemFinal')?.hasError('required')">
+        Quilometragem é obrigatória
+      </mat-error>
+      <mat-error *ngIf="finalizarForm.get('quilometragemFinal')?.hasError('min')">
+        Quilometragem final não pode ser menor que a inicial
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Observações (opcional)</mat-label>
+      <textarea matInput formControlName="observacoes"></textarea>
+    </mat-form-field>
+
+    <div mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancelar()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="finalizarForm.invalid">
+        Finalizar
+      </button>
+    </div>
+  </mat-dialog-content>
+</form>

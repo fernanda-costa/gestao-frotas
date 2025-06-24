@@ -1,0 +1,38 @@
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Veículo</mat-label>
+            <mat-select formControlName="veiculo">
+                <mat-option *ngFor="let v of veiculos" [value]="v">{{ v }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Motorista</mat-label>
+            <mat-select formControlName="motorista">
+                <mat-option *ngFor="let m of motoristas" [value]="m">{{ m }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Data e Hora de Saída</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataHora">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Destino</mat-label>
+            <input matInput formControlName="destino">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Justificativa</mat-label>
+            <textarea matInput formControlName="justificativa" rows="3"></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+            Salvar Agendamento
+        </button>
+    </form>
+</div>

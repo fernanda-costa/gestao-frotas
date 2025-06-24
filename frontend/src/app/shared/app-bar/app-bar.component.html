@@ -1,0 +1,25 @@
+<mat-toolbar color="primary" class="app-toolbar">
+
+    <a routerLink="/admin" class="app-logo-link">
+        <mat-icon class="app-icon">directions_bus</mat-icon>
+        <span class="app-title">Gestão de Frotas</span>
+    </a>
+
+    <span class="spacer"></span>
+
+    <ng-container *ngIf="auth.tipoUsuario == 'ADMIN'">
+        <a mat-button routerLink="/viagem/agendar">Agendar Viagem</a>
+        <a mat-button routerLink="/veiculos/gerenciar">Veículos</a>
+        <a mat-button routerLink="/motoristas/gerenciar">Motoristas</a>
+    </ng-container>
+
+    <ng-container *ngIf="auth.tipoUsuario == 'MOTORISTA'">
+        <a mat-button routerLink="/viagem/agendar">Agendar Viagem</a>
+        <a mat-button routerLink="/veiculos/gerenciar">Veículos</a>
+        <a mat-button routerLink="/motoristas/gerenciar">Motoristas</a>
+    </ng-container>
+
+    <button mat-icon-button (click)="logout()" matTooltip="Sair">
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>

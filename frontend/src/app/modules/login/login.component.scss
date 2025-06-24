@@ -1,0 +1,88 @@
+.hero-container {
+  height: 100vh;
+  background: linear-gradient(to right, #f0f4ff, #e6eefc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.hero-card {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hero-left {
+  background-color: #3f6ab5;
+  color: white;
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-left h2 {
+  margin-top: 3rem;
+  font-size: 1.8rem;
+}
+
+.hero-left p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  max-width: 300px;
+}
+
+.hero-image {
+  width: 200px;
+  height: auto;
+}
+
+.hero-right {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+button {
+  font-weight: bold;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .hero-card {
+    flex-direction: column;
+  }
+
+  .hero-left, .hero-right {
+    width: 100%;
+  }
+
+  .hero-left {
+    padding: 1.5rem;
+  }
+
+  .hero-right {
+    padding: 2rem 1.5rem;
+  }
+}

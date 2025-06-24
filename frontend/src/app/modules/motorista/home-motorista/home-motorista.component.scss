@@ -1,0 +1,26 @@
+.container {
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.acoes {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.botao-acao {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.conteudo>* {
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    background: #fff;
+}
