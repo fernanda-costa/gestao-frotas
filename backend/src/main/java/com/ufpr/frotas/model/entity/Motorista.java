@@ -4,12 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@DiscriminatorValue("MOTORISTA")
 @Getter @Setter
 @NoArgsConstructor
 public class Motorista extends Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String cpf;
 
     @Embedded
@@ -20,3 +18,4 @@ public class Motorista extends Usuario {
 
     private boolean ativo = true;
 }
+
