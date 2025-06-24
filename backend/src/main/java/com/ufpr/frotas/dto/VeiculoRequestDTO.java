@@ -25,11 +25,6 @@ public record VeiculoRequestDTO(
         StatusVeiculo status,
 
         @NotBlank(message = "Marca é obrigatória")
-        String marca,
+        String marca
 
-        @NotBlank(message = "RENAVAM é obrigatório")
-        String renavam,
-
-        @NotBlank(message = "Chassi é obrigatório")
-        String chassi
 ) {}

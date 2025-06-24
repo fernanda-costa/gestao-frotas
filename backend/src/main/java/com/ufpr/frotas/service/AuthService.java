@@ -1,13 +1,11 @@
 package com.ufpr.frotas.service;
 
-import com.ufpr.frotas.dto.CnhDTO;
-import com.ufpr.frotas.dto.EnderecoDTO;
 import com.ufpr.frotas.dto.UsuarioAutenticadoDTO;
 import com.ufpr.frotas.dto.UsuarioCadastroDTO;
 import com.ufpr.frotas.model.entity.Admin;
-import com.ufpr.frotas.model.entity.Cnh;
-import com.ufpr.frotas.model.entity.Endereco;
 import com.ufpr.frotas.model.entity.Motorista;
+import com.ufpr.frotas.model.entity.Endereco;
+import com.ufpr.frotas.model.entity.Cnh;
 import com.ufpr.frotas.model.enums.PerfilUsuario;
 import com.ufpr.frotas.repository.AdminRepository;
 import com.ufpr.frotas.repository.MotoristaRepository;
@@ -34,7 +32,7 @@ public class AuthService {
         if (adminOpt.isPresent()) {
             Admin admin = adminOpt.get();
             if (verificarSenha(senha, admin.getSenha())) {
-                return Optional.of(new UsuarioAutenticadoDTO(admin.getId(), admin.getNome(), email, PerfilUsuario.ADMIN));
+                return Optional.of(new UsuarioAutenticadoDTO(admin.getId(), admin.getNome(), email, PerfilUsuario.ADMINISTRADOR));
             }
             return Optional.empty();
         }
@@ -63,7 +61,7 @@ public class AuthService {
         return MessageDigest.isEqual(hashArmazenado, hashDigitado);
     }
 
-    public byte[] hashSenha(String senha, byte[] salt) throws Exception {
+    private byte[] hashSenha(String senha, byte[] salt) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(salt);
         return md.digest(senha.getBytes(StandardCharsets.UTF_8));
@@ -87,22 +85,6 @@ public class AuthService {
         return adminRepository.save(admin);
     }
 
-    private Cnh mapearCnhDTO(CnhDTO dto) {
-        if (dto == null) return null;
-
-        Cnh cnh = new Cnh();
-        cnh.setNumCnh(dto.getNumCnh());
-        cnh.setCategoria(dto.getCategoria());
-
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-
-        if (dto.getValidade() != null && !dto.getValidade().isBlank()) {
-            cnh.setValidade(LocalDate.parse(dto.getValidade(), formatter));
-        }
-
-        return cnh;
-    }
-
     public Motorista cadastrarMotorista(UsuarioCadastroDTO dto) throws Exception {
         Motorista motorista = new Motorista();
         motorista.setNome(dto.getNome());
@@ -113,26 +95,32 @@ public class AuthService {
         String senhaCripto = gerarSenhaHashComSalt(dto.getSenha());
         motorista.setSenha(senhaCripto);
 
-        Endereco endereco = mapearEnderecoDTO(dto.getEndereco());
-        motorista.setEndereco(endereco);
+        if(dto.getCnh() != null) {
+            Cnh cnh = new Cnh();
+            cnh.setNumCnh(dto.getCnh().getNumCnh());
+            cnh.setCategoria(dto.getCnh().getCategoria());
+            cnh.setDataEmissao(dto.getCnh().getDataEmissao());
 
-        Cnh cnh = mapearCnhDTO(dto.getCnh());
-        motorista.setCnh(cnh);
+            if (dto.getCnh().getValidade() != null) {
+                cnh.setValidade(dto.getCnh().getValidade());
+            }
+
+            cnh.setOrgaoEmissor(dto.getCnh().getOrgaoEmissor());
+            motorista.setCnh(cnh);
+        }
+
+        if(dto.getEndereco() != null) {
+            Endereco endereco = new Endereco();
+            endereco.setLogradouro(dto.getEndereco().getLogradouro());
+            endereco.setNumero(dto.getEndereco().getNumero());
+            endereco.setComplemento(dto.getEndereco().getComplemento());
+            endereco.setBairro(dto.getEndereco().getBairro());
+            endereco.setCidade(dto.getEndereco().getCidade());
+            endereco.setEstado(dto.getEndereco().getEstado());
+            endereco.setCep(dto.getEndereco().getCep());
+            motorista.setEndereco(endereco);
+        }
 
         return motoristaRepository.save(motorista);
     }
-
-    private Endereco mapearEnderecoDTO(EnderecoDTO dto) {
-        if (dto == null) return null;
-        Endereco endereco = new Endereco();
-        endereco.setLogradouro(dto.getLogradouro());
-        endereco.setNumero(dto.getNumero());
-        endereco.setComplemento(dto.getComplemento());
-        endereco.setBairro(dto.getBairro());
-        endereco.setCidade(dto.getCidade());
-        endereco.setEstado(dto.getEstado());
-        endereco.setCep(dto.getCep());
-        return endereco;
-    }
-
 }

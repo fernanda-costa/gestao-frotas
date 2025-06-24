@@ -29,6 +29,7 @@ public class AuthController {
                     .<ResponseEntity<?>>map(userDTO -> ResponseEntity.ok(userDTO))
                     .orElseGet(() -> ResponseEntity.status(401).body("Credenciais inválidas"));
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(500).body("Erro interno no servidor");
         }
     }
