@@ -26,7 +26,8 @@ public class Agendamento {
     private String justificativa;
 
     @Enumerated(EnumType.STRING)
-    private StatusAgendamento status;    private int kmSaida;
+    private StatusAgendamento status;
+    private int kmSaida;
     private int kmRetorno;
     private String obsSaida;
     private String obsRetorno;
