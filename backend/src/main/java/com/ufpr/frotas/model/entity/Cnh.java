@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 public class Cnh {
-    private String numero;
+    private String numCnh;
     private String categoria;
     private LocalDate validade;
 }

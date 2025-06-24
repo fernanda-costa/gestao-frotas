@@ -91,7 +91,7 @@ public class AuthService {
         if (dto == null) return null;
 
         Cnh cnh = new Cnh();
-        cnh.setNumero(dto.getNumero());
+        cnh.setNumCnh(dto.getNumCnh());
         cnh.setCategoria(dto.getCategoria());
 
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
