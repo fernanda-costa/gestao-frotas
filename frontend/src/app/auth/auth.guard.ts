@@ -13,12 +13,12 @@ export class AuthGuard implements CanActivate {
     const rotaDestino = route.routeConfig?.path;
     if (rotaDestino === 'login' && estaAutenticado) {
 
-      if (this.auth.tipoUsuario == 'ADMIN') {
+      if (this.auth.perfilUsuario == 'ADMINISTRADOR') {
         this.router.navigate(['/admin']);
         return false;
       }
 
-      if (this.auth.tipoUsuario == 'MOTORISTA') {
+      if (this.auth.perfilUsuario == 'MOTORISTA') {
         this.router.navigate(['/motorista']);
         return false;
       }

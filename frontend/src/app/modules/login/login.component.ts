@@ -18,7 +18,7 @@ import { AuthService } from '../../services/auth.service';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -40,18 +40,16 @@ export class LoginComponent {
 
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
+      this.authService.login(email, password).subscribe({
+        next: user => {
+          if (user.perfil == 'ADMINISTRADOR') {
+            this.router.navigate(['/admin']);
 
-      if (email === 'admin@email.com' && password === '123456') {
-        this.authService.login({ nome: "dmin", "tipo": 'ADMIN', token: "123" } as Usuario);
-        this.router.navigate(['/admin']);
-      } else if (email === 'motorista@email.com' && password === '123456') {
-        this.authService.login({ nome: "dmin", "tipo": 'MOTORISTA', token: "123" } as Usuario);
-        this.router.navigate(['/motorista']);
-      }  
-      
-      else {
-        this.loginError = 'E-mail ou senha inválidos.';
-      }
+          }
+          console.log('Login realizado:', user);
+        },
+        error: err => this.loginError = 'E-mail ou senha inválidos.'
+      });
     } else {
       this.loginError = 'Preencha todos os campos corretamente.';
     }

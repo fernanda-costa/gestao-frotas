@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { Veiculo } from '../../../models/veiculo.models';
+import { VeiculoService } from '../../../services/veiculo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-veiculos',
@@ -28,12 +30,32 @@ export class ListaVeiculosComponent {
   displayedColumns: string[] = ['placa', 'modelo', 'tipo', 'ano', 'km', 'status', 'acoes'];
   veiculos: Veiculo[] = [];
 
-  // editar(index: number) {
-  //   this.form.setValue(this.veiculos[index]);
-  //   this.editIndex = index;
-  // }
+  constructor(private veiculoService: VeiculoService, private router: Router) { }
 
-  inativar(index: number) {
-    this.veiculos[index].status = 'Inativo';
+  ngOnInit(): void {
+    this.carregarVeiculos();
+  }
+
+  carregarVeiculos(): void {
+    this.veiculoService.listar().subscribe({
+      next: (dados) => {
+        this.veiculos = dados;
+      },
+      error: (erro) => {
+        console.error('Erro ao buscar veículos:', erro);
+      }
+    });
+  }
+
+  adicionarVeiculo() {
+    this.router.navigate(['/veiculos/cadastrar']);
+  }
+
+  editar(veiculo: Veiculo) {
+    this.router.navigate(['/veiculos/editar/', veiculo.id]);
+  }
+
+  inativar(veiculo: Veiculo): void {
+    this.veiculoService.inativar(veiculo.id).subscribe(e => this.carregarVeiculos());
   }
 }

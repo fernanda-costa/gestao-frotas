@@ -1,5 +1,5 @@
 export interface Usuario {
     nome: string;
-    tipo: 'ADMIN' | 'MOTORISTA'; 
+    perfil: 'ADMINISTRADOR' | 'MOTORISTA'; 
     token: string;
 }

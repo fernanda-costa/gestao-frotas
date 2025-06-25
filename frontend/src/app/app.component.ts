@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     RouterOutlet,
     AppBarComponent,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

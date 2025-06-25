@@ -7,6 +7,7 @@ import { GerenciarMotoristasComponent } from './modules/motorista/gerenciar-moto
 import { AgendarViagemComponent } from './modules/agendamento/agendar-viagem/agendar-viagem.component';
 import { ListaVeiculosComponent } from './modules/veiculo/lista-veiculos/lista-veiculos.component';
 import { ListaMotoristaComponent } from './modules/motorista/lista-motorista/lista-motorista.component';
+import { GerenciarVeiculosComponent } from './modules/veiculo/gerenciar-veiculos/gerenciar-veiculos.component';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,9 @@ export const routes: Routes = [
         component: ListaVeiculosComponent,
         canActivate: [AuthGuard]
     },
+    { path: 'veiculos/cadastrar', component: GerenciarVeiculosComponent },
+    { path: 'veiculos/editar/:id', component: GerenciarVeiculosComponent },
+
     {
         path: 'viagem',
         component: AgendarViagemComponent,

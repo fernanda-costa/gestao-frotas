@@ -1,19 +1,38 @@
+.form-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.titulo {
+  margin-bottom: 2rem;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+
 .formulario {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
 }
 
 .campo {
-    flex: 1 1 220px;
-    min-width: 200px;
+  width: 100%;
 }
 
-.tabela {
-    margin-top: 2rem;
+.botoes {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
-table {
-    width: 100%;
+button mat-icon {
+  margin-right: 8px;
 }

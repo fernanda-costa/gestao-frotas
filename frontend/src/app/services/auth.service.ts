@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../models/usuario.model';
 
 @Injectable({
@@ -7,17 +8,22 @@ import { Usuario } from '../models/usuario.model';
 })
 export class AuthService {
   private usuarioSubject = new BehaviorSubject<Usuario | null>(null);
+  private readonly API_URL = 'http://localhost:8080/api/auth/login';
 
-  constructor() {
+  constructor(private http: HttpClient) {
     const data = localStorage.getItem('usuario');
     if (data) {
       this.usuarioSubject.next(JSON.parse(data));
     }
   }
 
-  login(usuario: Usuario) {
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-    this.usuarioSubject.next(usuario);
+  login(email: string, senha: string): Observable<Usuario> {
+    return this.http.post<Usuario>(this.API_URL, { email, senha }).pipe(
+      tap(usuario => {
+        localStorage.setItem('usuario', JSON.stringify(usuario));
+        this.usuarioSubject.next(usuario);
+      })
+    );
   }
 
   logout() {
@@ -33,8 +39,8 @@ export class AuthService {
     return this.usuarioSubject.value;
   }
 
-  get tipoUsuario(): string | null {
-    return this.usuario?.tipo || null;
+  get perfilUsuario(): string | null {
+    return this.usuario?.perfil || null;
   }
 
   get estaAutenticado(): boolean {
