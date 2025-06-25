@@ -44,7 +44,9 @@ export class LoginComponent {
         next: user => {
           if (user.perfil == 'ADMINISTRADOR') {
             this.router.navigate(['/admin']);
-
+          }
+          else if (user.perfil == 'MOTORISTA') {
+            this.router.navigate(['/motorista']);
           }
           console.log('Login realizado:', user);
         },

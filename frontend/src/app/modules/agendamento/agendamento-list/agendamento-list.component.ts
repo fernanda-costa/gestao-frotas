@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IniciarViagemDialogComponent } from '../iniciar-viagem-dialog/iniciar-viagem-dialog.component';
 import { FinalizarViagemDialogComponent } from '../finalizar-viagem-dialog/finalizar-viagem-dialog.component';
 import { DetalhesAgendamentoDialogComponent } from '../detalhes-agendamento-dialog/detalhes-agendamento-dialog.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-agendamento-list',
@@ -24,12 +25,23 @@ export class AgendamentoListComponent implements OnInit {
 
   agendamentos: Agendamento[] = [];
 
-  constructor(private agendamentoService: AgendamentoService, private dialog: MatDialog) { }
+  constructor(
+    private agendamentoService: AgendamentoService,
+    private dialog: MatDialog,
+    private usuarioService: AuthService
+  ) { }
 
   ngOnInit(): void {
-    this.agendamentoService.obterAgendamentosDoUsuario().subscribe((dados) => {
-      this.agendamentos = dados.sort((a, b) =>
-        new Date(a.dataHoraInicio).getTime() - new Date(b.dataHoraInicio).getTime()
+
+    this.atualizarLista();
+  }
+
+  private atualizarLista() {
+    const id = this.usuarioService.usuario?.id;
+
+    this.agendamentoService.obterAgendamentosDoUsuario(id!).subscribe((dados) => {
+      console.log(dados);
+      this.agendamentos = dados.sort((a, b) => new Date(a.dataHoraInicio).getTime() - new Date(b.dataHoraInicio).getTime()
       );
     });
   }
@@ -49,10 +61,17 @@ export class AgendamentoListComponent implements OnInit {
   }
 
   registrarInicioViagem(agendamento: any, dados: any) {
-    agendamento.status = 'EM_USO';
-    agendamento.quilometragemSaida = dados.quilometragemSaida;
-    agendamento.observacoes = dados.observacoes;
-    agendamento.dataHoraInicio = new Date();
+    this.agendamentoService.iniciarViagem(agendamento.id, dados.quilometragemSaida, dados.observacoes).subscribe(e => {
+      console.log(e);
+      this.atualizarLista();
+    })
+  }
+
+  registrarFimViagem(agendamento: any, dados: any) {
+    this.agendamentoService.finalizarViagem(agendamento.id, dados.quilometragemFinal, dados.observacoes).subscribe(e => {
+      console.log(e);
+      this.atualizarLista();
+    })
   }
 
   finalizarViagem(agendamento: any) {
@@ -64,6 +83,7 @@ export class AgendamentoListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(resultado => {
       if (resultado) {
         console.log('Viagem finalizada com:', resultado);
+        this.registrarFimViagem(agendamento, resultado);
       }
     });
   }

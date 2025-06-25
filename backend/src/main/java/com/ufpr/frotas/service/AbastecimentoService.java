@@ -2,11 +2,13 @@ package com.ufpr.frotas.service;
 
 import com.ufpr.frotas.dto.AbastecimentoRequestDTO;
 import com.ufpr.frotas.model.entity.Abastecimento;
+import com.ufpr.frotas.model.entity.Motorista;
 import com.ufpr.frotas.model.entity.Veiculo;
 import com.ufpr.frotas.repository.AbastecimentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,7 +17,7 @@ public class AbastecimentoService {
 
     private final AbastecimentoRepository abastecimentoRepository;
     private final VeiculoService veiculoService;
-//    private final MotoristaService motoristaService;
+    private final MotoristaService motoristaService;
 
     public List<Abastecimento> listarTodos() {
         return abastecimentoRepository.findAll();
@@ -49,11 +51,15 @@ public class AbastecimentoService {
             abastecimento.setVeiculo(veiculo);
         }
 
-//        if (dto.getMotoristaId() != null) {
-//            Motorista motorista = motoristaService.buscarPorId(dto.getMotoristaId());
-//            abastecimento.setMotorista(motorista);
-//        }
+        if (dto.getMotoristaId() != null) {
+            Motorista motorista = motoristaService.buscarPorId(dto.getMotoristaId());
+            abastecimento.setMotorista(motorista);
+        }
 
         return abastecimento;
+    }
+
+    public List<Abastecimento> listarComFiltros(Long motoristaId, String status, LocalDateTime dataInicio, LocalDateTime dataFinal) {
+        return  null;
     }
 }

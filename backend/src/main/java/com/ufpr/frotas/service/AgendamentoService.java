@@ -1,19 +1,18 @@
 package com.ufpr.frotas.service;
 
 import com.ufpr.frotas.dto.AgendamentoRequestDTO;
-import com.ufpr.frotas.dto.ManutencaoRequestDTO;
+import com.ufpr.frotas.dto.FinalizarViagemDTO;
+import com.ufpr.frotas.dto.IniciarViagemRequestDTO;
 import com.ufpr.frotas.model.entity.Agendamento;
-import com.ufpr.frotas.model.entity.Manutencao;
 import com.ufpr.frotas.model.entity.Motorista;
 import com.ufpr.frotas.model.entity.Veiculo;
 import com.ufpr.frotas.model.enums.StatusAgendamento;
-import com.ufpr.frotas.model.enums.StatusVeiculo;
 import com.ufpr.frotas.repository.AgendamentoRepository;
-import com.ufpr.frotas.repository.VeiculoRepository;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,7 +21,7 @@ public class AgendamentoService {
 
     private final AgendamentoRepository agendamentoRepository;
     private final VeiculoService veiculoService;
-//    private final MotoristaService motoristaService;
+    private final MotoristaService motoristaService;
 
     public List<Agendamento> listarTodos() {
         return agendamentoRepository.findAll();
@@ -59,10 +58,36 @@ public class AgendamentoService {
             Veiculo veiculo = veiculoService.buscarPorId(dto.getVeiculoId());
             agendamento.setVeiculo(veiculo);
         }
-//
-//        if (dto.getMotoristaId() != null) {
-//            Motorista motorista = motoristaService.buscarPorId(dto.getMotoristaId());
-//            agendamento.setMotorista(motorista);
-//        }
+
+        if (dto.getMotoristaId() != null) {
+            Motorista motorista = motoristaService.buscarPorId(dto.getMotoristaId());
+            agendamento.setMotorista(motorista);
+        }
+    }
+
+    public List<Agendamento> buscarPorMotoristaId(Long id) {
+        return agendamentoRepository.findByMotoristaIdOrderByDataHoraSaidaAsc(id);
+    }
+
+    public Agendamento iniciarViagem(Long id, @Valid IniciarViagemRequestDTO dto) {
+        Agendamento agendamento = buscarPorId(id);
+
+        agendamento.setStatus(StatusAgendamento.EM_USO);
+        agendamento.setKmSaida(dto.getKmSaida());
+        agendamento.setObsSaida(dto.getObservacoes());
+        agendamento.setDataHoraSaida(LocalDateTime.now());
+
+        return agendamentoRepository.save(agendamento);
+    }
+
+    public Agendamento finalizarViagem(Long id, @Valid FinalizarViagemDTO dto) {
+        Agendamento agendamento = buscarPorId(id);
+
+        agendamento.setStatus(StatusAgendamento.FINALIZADO);
+        agendamento.setKmRetorno(dto.getKmRetorno());
+        agendamento.setObsRetorno(dto.getObservacoes());
+        agendamento.setDataHoraRetorno(LocalDateTime.now());
+
+        return agendamentoRepository.save(agendamento);
     }
 }

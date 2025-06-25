@@ -2,6 +2,8 @@ package com.ufpr.frotas.controller;
 
 import com.ufpr.frotas.dto.AbastecimentoRequestDTO;
 import com.ufpr.frotas.dto.AgendamentoRequestDTO;
+import com.ufpr.frotas.dto.FinalizarViagemDTO;
+import com.ufpr.frotas.dto.IniciarViagemRequestDTO;
 import com.ufpr.frotas.model.entity.Abastecimento;
 import com.ufpr.frotas.model.entity.Agendamento;
 import com.ufpr.frotas.service.AbastecimentoService;
@@ -30,9 +32,24 @@ public class AgendamentoController {
         return ResponseEntity.ok(agendamentoServiceService.buscarPorId(id));
     }
 
+    @GetMapping("/motorista/{id}")
+    public ResponseEntity<List<Agendamento>> buscarPorMotoristaId(@PathVariable Long id) {
+        return ResponseEntity.ok(agendamentoServiceService.buscarPorMotoristaId(id));
+    }
+
     @PostMapping
     public ResponseEntity<Agendamento> salvar(@RequestBody @Valid AgendamentoRequestDTO dto) {
         return ResponseEntity.ok(agendamentoServiceService.salvar(dto));
+    }
+
+    @PutMapping("iniciar/{id}")
+    public ResponseEntity<Agendamento> Inciar(@PathVariable Long id, @RequestBody @Valid IniciarViagemRequestDTO dto) {
+        return ResponseEntity.ok(agendamentoServiceService.iniciarViagem(id, dto));
+    }
+
+    @PutMapping("finalizar/{id}")
+    public ResponseEntity<Agendamento> Finalizar(@PathVariable Long id, @RequestBody @Valid FinalizarViagemDTO dto) {
+        return ResponseEntity.ok(agendamentoServiceService.finalizarViagem(id, dto));
     }
 
 }

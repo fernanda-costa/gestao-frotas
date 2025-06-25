@@ -2,23 +2,22 @@
     <form [formGroup]="form" (ngSubmit)="salvar()">
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Veículo</mat-label>
-            <mat-select formControlName="veiculo">
-                <mat-option *ngFor="let v of veiculos" [value]="v">{{ v }}</mat-option>
+            <mat-select formControlName="veiculoId">
+                <mat-option *ngFor="let v of veiculos" [value]="v.id">{{ v.modelo }} - {{ v.tipo}} / {{ v.ano
+                    }}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Motorista</mat-label>
-            <mat-select formControlName="motorista">
-                <mat-option *ngFor="let m of motoristas" [value]="m">{{ m }}</mat-option>
+            <mat-select formControlName="motoristaId">
+                <mat-option *ngFor="let m of motoristas" [value]="m.id">{{ m.nome }}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Data e Hora de Saída</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="dataHora">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <input matInput type="datetime-local" formControlName="dataHoraSaida">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -33,6 +32,11 @@
 
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
             Salvar Agendamento
+        </button>
+
+        <button mat-raised-button color="accent" type="button" (click)="voltar()" style="margin-left: 8px;">
+            <mat-icon>arrow_back</mat-icon>
+            Voltar
         </button>
     </form>
 </div>

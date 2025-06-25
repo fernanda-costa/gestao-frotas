@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -14,6 +14,8 @@ import { AgendamentoService } from '../../../services/agendamento.service';
 import { Agendamento } from '../../../models/agendamento.model';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
+import { Motorista } from '../../../models/motorista.model';
+import { MotoristaService } from '../../../services/motorista.service';
 
 @Component({
   selector: 'app-agendamentos',
@@ -35,41 +37,42 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './agendamentos.component.html',
   styleUrls: ['./agendamentos.component.scss']
 })
-export class AgendamentosComponent {
+export class AgendamentosComponent implements OnInit {
   filtroForm: FormGroup;
 
   agendamentos: Agendamento[] = [];
   agendamentosFiltrados: Agendamento[] = [];
+  motoristas: Motorista[] = [];
 
-  constructor(private fb: FormBuilder, private agendamentosService: AgendamentoService) {
+  constructor(
+    private fb: FormBuilder,
+    private agendamentosService: AgendamentoService,
+    private motoristaService: MotoristaService,
+  ) {
     this.filtroForm = this.fb.group({
-      motorista: [''],
+      motoristaId: [''],
       status: [''],
       dataInicio: [''],
       dataFim: ['']
     });
 
-    this.agendamentosService.obterTodosAgendamentos().subscribe(result => {
+    this.agendamentosService.obterTodosAgendamentosComFiltros(this.filtroForm.value).subscribe(result => {
       this.agendamentos = result;
       this.agendamentosFiltrados = result;
     });
-    console.log(this.agendamentosFiltrados);
+  }
 
-    this.filtroForm.valueChanges.subscribe(() => this.aplicarFiltros());
+  ngOnInit(): void {
+    this.motoristaService.listar().subscribe(e => {
+      this.motoristas = e;
+    })
   }
 
   aplicarFiltros() {
-    const { motorista, status, dataInicio, dataFim } = this.filtroForm.value;
-
-    this.agendamentosFiltrados = this.agendamentos!.filter(ag => {
-      const matchMotorista = motorista ? ag.motorista.nome.toLowerCase().includes(motorista.toLowerCase()) : true;
-      const matchStatus = status ? ag.status === status : true;
-      const matchDataInicio = dataInicio ? ag.dataHoraInicio >= new Date(dataInicio) : true;
-      const matchDataFim = dataFim ? ag.dataHoraInicio <= new Date(dataFim) : true;
-      return true;
-      // return matchMotorista && matchStatus && matchDataInicio && matchDataFim;
+    this.agendamentosService.obterTodosAgendamentosComFiltros(this.filtroForm.value).subscribe(result => {
+      this.agendamentos = result;
+      this.agendamentosFiltrados = result;
     });
-
   }
 
   agendarViagem(ag: any) {

@@ -5,12 +5,12 @@
 
     <ng-container matColumnDef="dataHoraInicio">
       <th mat-header-cell *matHeaderCellDef> Data/Hora </th>
-      <td mat-cell *matCellDef="let ag"> {{ ag.dataHoraInicio | date:'short' }} </td>
+      <td mat-cell *matCellDef="let ag"> {{ ag.dataHoraSaida | date:'short' }} </td>
     </ng-container>
 
     <ng-container matColumnDef="veiculo">
       <th mat-header-cell *matHeaderCellDef> Veículo </th>
-      <td mat-cell *matCellDef="let ag"> {{ ag.veiculo }} </td>
+      <td mat-cell *matCellDef="let ag"> {{ ag.veiculo?.placa }} </td>
     </ng-container>
 
     <ng-container matColumnDef="destino">

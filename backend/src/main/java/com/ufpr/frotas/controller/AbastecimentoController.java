@@ -8,9 +8,11 @@ import com.ufpr.frotas.service.AbastecimentoService;
 import com.ufpr.frotas.service.ManutencaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
