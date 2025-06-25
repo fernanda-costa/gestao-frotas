@@ -4,5 +4,5 @@ export interface Motorista {
   cpf: string;
   telefone: string;
   email: string;
-  status: string;
+  ativo: boolean;
 }

@@ -10,10 +10,6 @@
       <td mat-cell *matCellDef="let m"> {{ m.nome }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="cpf">
-      <th mat-header-cell *matHeaderCellDef> CPF </th>
-      <td mat-cell *matCellDef="let m"> {{ m.cpf }} </td>
-    </ng-container>
 
     <ng-container matColumnDef="telefone">
       <th mat-header-cell *matHeaderCellDef> Telefone </th>
@@ -25,18 +21,18 @@
       <td mat-cell *matCellDef="let m"> {{ m.email }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let m"> {{ m.status }} </td>
+    <ng-container matColumnDef="ativo">
+      <th mat-header-cell *matHeaderCellDef> Ativo </th>
+      <td mat-cell *matCellDef="let m"> {{ m.ativo }} </td>
     </ng-container>
 
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
-      <td mat-cell *matCellDef="let m; let i = index">
-        <button mat-icon-button color="primary" (click)="editar(i)">
+      <td mat-cell *matCellDef="let m">
+        <button mat-icon-button color="primary" (click)="editar(m)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="inativar(i)">
+        <button mat-icon-button color="warn" (click)="inativar(m)">
           <mat-icon>block</mat-icon>
         </button>
       </td>

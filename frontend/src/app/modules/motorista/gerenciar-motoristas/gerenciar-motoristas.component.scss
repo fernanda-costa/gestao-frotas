@@ -1,27 +1,50 @@
-.card {
-  max-width: 700px;
+.form-card {
+  max-width: 900px;
   margin: 2rem auto;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
-.row {
+.section {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
-  flex-wrap: wrap;
+}
 
-  > .full-width {
-    flex: 1 1 300px;
-  }
+h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #3f51b5;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+mat-divider {
+  margin: 1rem 0;
 }
 
 .actions {
   display: flex;
-  gap: 1rem;
   justify-content: flex-end;
+  gap: 1rem;
 }

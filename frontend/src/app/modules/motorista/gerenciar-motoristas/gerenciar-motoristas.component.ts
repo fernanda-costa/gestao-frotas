@@ -7,6 +7,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MotoristaService } from '../../../services/motorista.service';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-gerenciar-motoristas',
@@ -16,7 +19,9 @@ import { Router, ActivatedRoute } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatDividerModule,
+    MatIconModule
   ],
   templateUrl: './gerenciar-motoristas.component.html',
   styleUrl: './gerenciar-motoristas.component.scss'
@@ -25,56 +30,62 @@ export class GerenciarMotoristasComponent {
 
   form: FormGroup;
   index: number | null = null;
+  editando = false;
 
   constructor(
     private fb: FormBuilder,
     public router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private motoristaService: MotoristaService
   ) {
     this.form = this.fb.group({
+      id: [],
       nome: ['', Validators.required],
-      cpf: ['', Validators.required],
-      cnh: ['', Validators.required],
-      validadeCnh: ['', Validators.required],
-      telefone: ['', Validators.required],
-      cep: ['', Validators.required],
-      endereco: [''],
-      cidade: [''],
-      uf: [''],
       email: ['', [Validators.required, Validators.email]],
       senha: ['', Validators.required],
-      status: ['Ativo']
+      telefone: ['', Validators.required],
+      perfil: ['MOTORISTA', Validators.required],
+      cpf: [''],
+      ativo: [true],
+
+      cnh: this.fb.group({
+        numCnh: ['', Validators.required],
+        categoria: ['', Validators.required],
+        dataEmissao: ['', Validators.required],
+        validade: ['', Validators.required],
+        orgaoEmissor: ['', Validators.required]
+      }),
+
+      endereco: this.fb.group({
+        logradouro: [''],
+        numero: [''],
+        complemento: [''],
+        bairro: [''],
+        cidade: [''],
+        estado: [''],
+        cep: ['']
+      })
     });
 
     this.route.params.subscribe(params => {
       if (params['id'] !== undefined) {
+        this.editando = true;
         this.index = +params['id'];
         this.carregarDados(this.index);
       }
     });
   }
 
-  carregarDados(index: number) {
-    const motoristaMock = {
-      nome: 'Maria Oliveira',
-      cpf: '98765432100',
-      cnh: '123456789',
-      validadeCnh: '2025-12-31',
-      telefone: '11999999999',
-      cep: '01001000',
-      endereco: 'Praça da Sé',
-      cidade: 'São Paulo',
-      uf: 'SP',
-      email: 'maria@mail.com',
-      senha: '',
-      status: 'Ativo'
-    };
+  carregarDados(id: number) {
+    this.motoristaService.buscarPorId(id).subscribe(m => {
+      console.log(m);
+      this.form.patchValue(m);
+    })
 
-    this.form.patchValue(motoristaMock);
   }
 
-  buscarEndereco() {
-
+  voltar() {
+    this.router.navigate(['/motoristas']);
   }
 
   salvar() {

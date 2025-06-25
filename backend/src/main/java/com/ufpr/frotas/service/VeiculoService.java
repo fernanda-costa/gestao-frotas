@@ -2,6 +2,7 @@ package com.ufpr.frotas.service;
 
 import com.ufpr.frotas.dto.VeiculoRequestDTO;
 import com.ufpr.frotas.model.entity.Veiculo;
+import com.ufpr.frotas.model.enums.StatusVeiculo;
 import com.ufpr.frotas.repository.VeiculoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,7 @@ public class VeiculoService {
     public void desativar(Long id) {
         Veiculo veiculo = buscarPorId(id);
         veiculo.setAtivo(false);
+        veiculo.setStatus(StatusVeiculo.INATIVO);
         veiculoRepository.save(veiculo);
     }
 }
