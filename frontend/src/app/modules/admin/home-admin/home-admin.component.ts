@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AgendamentosComponent } from '../../agendamento/agendamentos/agendamentos.component';
+import { AgendamentosComponent } from '../../agendamento/agendamentos-admin/agendamentos.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -29,6 +29,10 @@ export class HomeAdminComponent {
     this.router.navigate(['/motoristas']);
   }
 
+  visualizarOcorrencias() {
+    this.router.navigate(['/ocorrencias']);
+  }
+
   registrarAbastecimento() {
     const dialogRef = this.dialog.open(RegistrarAbastecimentoModalComponent, {
       width: '800px',
@@ -36,9 +40,7 @@ export class HomeAdminComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
 
-      }
     });
   }
 

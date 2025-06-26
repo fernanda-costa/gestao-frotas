@@ -36,6 +36,43 @@
   font-size: 0.875rem;
 }
 
+mat-chip {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.status-chip {
+  padding: 4px 10px;
+  border-radius: 16px;
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+
+  &.AGENDADO {
+    background-color: #e59f35;
+  }
+
+  &.EM_USO {
+    background-color: #43a047;
+  }
+
+  &.PENDENTE {
+    background-color: #e2e535;
+  }
+
+  &.FINALIZADO {
+    background-color: #0d62a7;
+  }
+}
+
+
 .btn-filtrar {
   height: 40px;
   display: flex;

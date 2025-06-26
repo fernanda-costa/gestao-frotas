@@ -11,9 +11,12 @@ import com.ufpr.frotas.service.AbastecimentoService;
 import com.ufpr.frotas.service.AgendamentoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -26,6 +29,17 @@ public class AgendamentoController {
     @GetMapping
     public ResponseEntity<List<Agendamento>> listar() {
         return ResponseEntity.ok(agendamentoServiceService.listarTodos());
+    }
+
+    @GetMapping("filtrar")
+    public ResponseEntity<List<Agendamento>> listarComFiltros(
+            @RequestParam(required = false) StatusAgendamento status,
+            @RequestParam(required = false) Long motoristaId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim
+    ) {
+        List<Agendamento> resultados = agendamentoServiceService.buscarComFiltros(status, motoristaId, dataInicio, dataFim);
+        return ResponseEntity.ok(resultados);
     }
 
     @GetMapping("/{id}")

@@ -12,7 +12,7 @@ import { Veiculo } from '../../../models/veiculo.models';
 import { VeiculoService } from '../../../services/veiculo.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../shared/app-bar/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-lista-veiculos',

@@ -8,6 +8,7 @@ import { AgendarViagemComponent } from './modules/agendamento/agendar-viagem/age
 import { ListaVeiculosComponent } from './modules/veiculo/lista-veiculos/lista-veiculos.component';
 import { ListaMotoristaComponent } from './modules/motorista/lista-motorista/lista-motorista.component';
 import { GerenciarVeiculosComponent } from './modules/veiculo/gerenciar-veiculos/gerenciar-veiculos.component';
+import { OcorrenciaListComponent } from './modules/ocorrencia/ocorrencia-list/ocorrencia-list.component';
 
 export const routes: Routes = [
     {
@@ -25,7 +26,11 @@ export const routes: Routes = [
         component: HomeAdminComponent,
         canActivate: [AuthGuard]
     },
-
+    {
+        path: 'ocorrencias',
+        component: OcorrenciaListComponent,
+        canActivate: [AuthGuard]
+    },
     { path: 'motoristas', component: ListaMotoristaComponent },
     { path: 'motoristas/cadastrar', component: GerenciarMotoristasComponent },
     { path: 'motoristas/editar/:id', component: GerenciarMotoristasComponent },

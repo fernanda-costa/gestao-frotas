@@ -6,7 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { Motorista } from '../../../models/motorista.model';
 import { Router } from '@angular/router';
 import { MotoristaService } from '../../../services/motorista.service';
-import { ConfirmDialogComponent } from '../../../shared/app-bar/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

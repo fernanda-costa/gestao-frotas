@@ -1,20 +1,27 @@
-<div class="acoes-container">
-  <button mat-raised-button color="primary" (click)="agendarViagem()">
-    <mat-icon>event</mat-icon> Agendar Viagem
-  </button>
+<div class="container">
 
-  <button mat-raised-button color="accent" (click)="gerenciarVeiculos()">
-    <mat-icon>directions_car</mat-icon> Gerenciar Veículos
-  </button>
+  <div class="acoes-container">
+    <button mat-raised-button color="primary" (click)="agendarViagem()">
+      <mat-icon>event</mat-icon> Agendar Viagem
+    </button>
 
-  <button mat-raised-button color="accent" (click)="gerenciarMotoristas()">
-    <mat-icon>person</mat-icon> Gerenciar Motoristas
-  </button>
+    <button mat-raised-button color="accent" (click)="gerenciarVeiculos()">
+      <mat-icon>directions_car</mat-icon> Gerenciar Veículos
+    </button>
 
-  <button mat-raised-button color="warn" (click)="registrarAbastecimento()">
-    <mat-icon>local_gas_station</mat-icon> Registrar Abastecimento
-  </button>
+    <button mat-raised-button color="accent" (click)="gerenciarMotoristas()">
+      <mat-icon>person</mat-icon> Gerenciar Motoristas
+    </button>
+
+    <button mat-raised-button color="warn" (click)="registrarAbastecimento()">
+      <mat-icon>local_gas_station</mat-icon> Registrar Abastecimento
+    </button>
+
+    <button mat-raised-button color="warn" (click)="visualizarOcorrencias()">
+      <mat-icon>report_problem</mat-icon> Visualizar ocorrências
+    </button>
+  </div>
+
+
+  <app-agendamentos></app-agendamentos>
 </div>
-
-
-<app-agendamentos></app-agendamentos>

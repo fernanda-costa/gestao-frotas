@@ -22,7 +22,7 @@ public class MotoristaService {
     private final PasswordEncoder passwordEncoder;
 
     public List<Motorista> listarTodos(Boolean ativo) {
-        if(ativo){
+        if(ativo != null){
             return motoristaRepository.findAllByAtivo(ativo);
         }
 

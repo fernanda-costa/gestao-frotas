@@ -1,0 +1,27 @@
+<h2>Ocorrências Registradas</h2>
+
+<table mat-table [dataSource]="ocorrencias" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="veiculo">
+        <th mat-header-cell *matHeaderCellDef> Veículo </th>
+        <td mat-cell *matCellDef="let o"> {{ o.veiculo?.marca }} - {{ o.veiculo?.placa }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="motorista">
+        <th mat-header-cell *matHeaderCellDef> Motorista </th>
+        <td mat-cell *matCellDef="let o"> {{ o.motorista?.nome }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef> Descrição </th>
+        <td mat-cell *matCellDef="let o"> {{ o.descricao }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef> Data </th>
+        <td mat-cell *matCellDef="let o"> {{ o.dataHora | date:'short' }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['veiculo', 'motorista','descricao', 'data']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['veiculo', 'motorista', 'descricao', 'data'];"></tr>
+</table>

@@ -1,7 +1,7 @@
 <div class="container">
 
-  <!-- <form [formGroup]="filtroForm" class="filtros" (ngSubmit)="aplicarFiltros()">
-    <mat-form-field appearance="outline" class="full-width">
+  <form [formGroup]="filtroForm" class="filtros" (ngSubmit)="aplicarFiltros()">
+    <mat-form-field appearance="outline" class="filtro-campo compacto">
       <mat-label>Motorista</mat-label>
       <mat-select formControlName="motoristaId">
         <mat-option *ngFor="let m of motoristas" [value]="m?.id">{{ m?.nome }}</mat-option>
@@ -36,7 +36,11 @@
       <mat-icon>search</mat-icon>
       Filtrar
     </button>
-  </form> -->
+    <button mat-flat-button color="accent" type="submit" class="btn-filtrar" (click)="limparFiltros()">
+      <mat-icon>clear</mat-icon>
+      Limpar filtro
+    </button>
+  </form>
 
   <h2>Agendamentos</h2>
   <table mat-table [dataSource]="agendamentosFiltrados" class="mat-elevation-z8">
@@ -66,24 +70,36 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let ag"> {{ ag.status }} </td>
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Status </th>
+      <td mat-cell *matCellDef="let ag" class="text-center">
+        <span class="status-chip" [ngClass]="ag.status">
+          {{ ag.status }}
+        </span>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="acoes">
-      <th mat-header-cell *matHeaderCellDef> Ações </th>
-      <td mat-cell *matCellDef="let ag">
-        <button *ngIf="ag.status === 'PENDENTE'" mat-raised-button color="primary" (click)="agendarViagem(ag)">
-          Agendar Viagem
-        </button>
-        <button *ngIf="ag.status === 'EM_USO'" mat-raised-button color="accent" (click)="registrarAbastecimento(ag)">
-          Registrar Abastecimento
-        </button>
-        <button *ngIf="ag.status === 'FINALIZADO'" mat-raised-button color="warn" (click)="registrarManutencao(ag)">
-          Registrar Manutenção
-        </button>
+      <th mat-header-cell *matHeaderCellDef class="text-center"> Ações </th>
+      <td mat-cell *matCellDef="let ag" class="text-center">
+        <div class="acoes-wrapper">
+          <button *ngIf="ag.status === 'PENDENTE'" mat-stroked-button color="primary" (click)="agendarViagem(ag)">
+            <mat-icon class="icon-space">event</mat-icon>
+            Agendar
+          </button>
+
+          <button *ngIf="ag.status === 'EM_USO'" mat-stroked-button color="accent" (click)="registrarAbastecimento(ag)">
+            <mat-icon class="icon-space">local_gas_station</mat-icon>
+            Abastecer
+          </button>
+
+          <button *ngIf="ag.status === 'FINALIZADO'" mat-stroked-button color="warn" (click)="registrarManutencao(ag)">
+            <mat-icon class="icon-space">build</mat-icon>
+            Manutenção
+          </button>
+        </div>
       </td>
     </ng-container>
+
 
     <tr mat-header-row
       *matHeaderRowDef="['motorista', 'veiculo', 'destino', 'dataInicio', 'dataFim', 'status', 'acoes']">

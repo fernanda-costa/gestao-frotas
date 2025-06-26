@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Registrar Ocorrência</h2>
+<mat-dialog-content>
+
+    <form [formGroup]="form" (ngSubmit)="salvar()" class="form">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Descrição</mat-label>
+            <textarea matInput formControlName="descricao" required rows="3"></textarea>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Veículo</mat-label>
+            <mat-select formControlName="veiculoId">
+                <mat-option *ngFor="let v of veiculos" [value]="v.id">{{ v.modelo }} - {{ v.tipo}} / {{ v.ano
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Salvar</button>
+            <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+        </div>
+    </form>
+</mat-dialog-content>

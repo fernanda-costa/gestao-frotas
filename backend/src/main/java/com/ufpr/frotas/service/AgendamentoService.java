@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -93,5 +94,9 @@ public class AgendamentoService {
         agendamento.setDataHoraRetorno(LocalDateTime.now());
 
         return agendamentoRepository.save(agendamento);
+    }
+
+    public List<Agendamento> buscarComFiltros(StatusAgendamento status, Long motoristaId, LocalDate dataInicio, LocalDate dataFim) {
+        return agendamentoRepository.buscarComFiltros(motoristaId, status);
     }
 }

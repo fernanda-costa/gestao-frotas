@@ -1,5 +1,3 @@
-import { Viagem } from '../../../models/viagem.model';
-import { ViagemService } from '../../../services/viagem.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';

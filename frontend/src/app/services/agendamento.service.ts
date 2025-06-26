@@ -40,8 +40,8 @@ export class AgendamentoService {
   obterTodosAgendamentosComFiltros(
     motoristaId?: number,
     status?: string,
-    dataInicio?: string,
-    dataFinal?: string
+    dataInicio?: Date,
+    dataFinal?: Date
   ): Observable<Agendamento[]> {
     let params = new HttpParams();
     console.log(motoristaId, status, dataFinal, dataInicio)
@@ -53,13 +53,13 @@ export class AgendamentoService {
       params = params.set('status', status);
     }
     if (dataInicio) {
-      params = params.set('dataInicio', dataInicio);
+      params = params.set('dataInicio', dataInicio.toISOString().split('T')[0]);
     }
     if (dataFinal) {
-      params = params.set('dataFinal', dataFinal);
+      params = params.set('dataFinal', dataFinal.toISOString().split('T')[0]);
     }
 
-    return this.http.get<Agendamento[]>(this.API_URL, { params });
+    return this.http.get<Agendamento[]>(`${this.API_URL}/filtrar`, { params });
   }
 
 }

@@ -18,6 +18,8 @@ import { Motorista } from '../../../models/motorista.model';
 import { MotoristaService } from '../../../services/motorista.service';
 import { RegistrarManutencaoModalComponent } from '../../registrar-manutencao-modal/registrar-manutencao-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { RegistrarAbastecimentoModalComponent } from '../../registrar-abastecimento-modal/registrar-abastecimento-modal.component';
 
 @Component({
   selector: 'app-agendamentos',
@@ -50,7 +52,8 @@ export class AgendamentosComponent implements OnInit {
     private fb: FormBuilder,
     private agendamentosService: AgendamentoService,
     private motoristaService: MotoristaService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
   ) {
     this.filtroForm = this.fb.group({
       motoristaId: [''],
@@ -59,7 +62,7 @@ export class AgendamentosComponent implements OnInit {
       dataFim: ['']
     });
 
-    this.agendamentosService.obterTodosAgendamentosComFiltros(this.filtroForm.value).subscribe(result => {
+    this.agendamentosService.obterTodosAgendamentos().subscribe(result => {
       this.agendamentos = result;
       this.agendamentosFiltrados = result;
     });
@@ -72,18 +75,38 @@ export class AgendamentosComponent implements OnInit {
   }
 
   aplicarFiltros() {
-    this.agendamentosService.obterTodosAgendamentosComFiltros(this.filtroForm.value).subscribe(result => {
+    const { motoristaId, status, dataInicio, dataFim } = this.filtroForm.value;
+    this.agendamentosService.obterTodosAgendamentosComFiltros(
+      motoristaId,
+      status,
+      dataInicio,
+      dataFim
+    ).subscribe(result => {
+      this.agendamentos = result;
+      this.agendamentosFiltrados = result;
+    });
+  }
+
+  limparFiltros() {
+    this.agendamentosService.obterTodosAgendamentos().subscribe(result => {
       this.agendamentos = result;
       this.agendamentosFiltrados = result;
     });
   }
 
   agendarViagem(ag: Agendamento) {
-    console.log('Agendar viagem:', ag);
+    this.router.navigate(['/viagem']);
   }
 
   registrarAbastecimento(ag: Agendamento) {
-    console.log('Registrar abastecimento:', ag);
+      const dialogRef = this.dialog.open(RegistrarAbastecimentoModalComponent, {
+          width: '800px',
+          data: {}
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+    
+        });
   }
 
   registrarManutencao(ag: Agendamento) {
@@ -97,20 +120,6 @@ export class AgendamentosComponent implements OnInit {
         console.log('Manutenção registrada:', result);
       }
     });
-  }
-
-
-  getStatusColor(status: string): 'primary' | 'accent' | 'warn' {
-    switch (status) {
-      case 'PENDENTE':
-        return 'primary';   // azul
-      case 'EM_USO':
-        return 'accent';    // rosa
-      case 'FINALIZADO':
-        return 'warn';      // vermelho
-      default:
-        return 'primary';
-    }
   }
 
 }
