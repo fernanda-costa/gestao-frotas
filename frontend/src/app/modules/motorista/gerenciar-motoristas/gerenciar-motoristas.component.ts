@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MotoristaService } from '../../../services/motorista.service';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-gerenciar-motoristas',
@@ -21,8 +22,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatCardModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    NgxMaskDirective,
   ],
+  providers: [provideNgxMask()],
   templateUrl: './gerenciar-motoristas.component.html',
   styleUrl: './gerenciar-motoristas.component.scss'
 })
