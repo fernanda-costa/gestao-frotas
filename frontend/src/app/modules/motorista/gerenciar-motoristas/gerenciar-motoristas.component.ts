@@ -36,16 +36,16 @@ export class GerenciarMotoristasComponent {
     private fb: FormBuilder,
     public router: Router,
     private route: ActivatedRoute,
-    private motoristaService: MotoristaService
+    private motoristaService: MotoristaService,
+    private http: HttpClient
   ) {
     this.form = this.fb.group({
       id: [],
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', Validators.required],
       telefone: ['', Validators.required],
-      perfil: ['MOTORISTA', Validators.required],
       cpf: [''],
+      senha: [''],
       ativo: [true],
 
       cnh: this.fb.group({
@@ -84,6 +84,33 @@ export class GerenciarMotoristasComponent {
 
   }
 
+  buscarCep() {
+    const cep = this.form.get('endereco.cep')?.value;
+
+    if (!cep || cep.length < 8) return;
+
+    this.http.get<any>(`https://viacep.com.br/ws/${cep}/json/`).subscribe({
+      next: (res) => {
+        if (res.erro) {
+          alert('CEP não encontrado!');
+          return;
+        }
+
+        this.form.patchValue({
+          endereco: {
+            logradouro: res.logradouro,
+            bairro: res.bairro,
+            cidade: res.localidade,
+            estado: res.uf
+          }
+        });
+      },
+      error: () => {
+        alert('Erro ao buscar CEP');
+      }
+    });
+  }
+
   voltar() {
     this.router.navigate(['/motoristas']);
   }
@@ -93,7 +120,10 @@ export class GerenciarMotoristasComponent {
 
     const dados = this.form.value;
 
-    alert('Motorista salvo com sucesso!');
-    this.router.navigate(['/motoristas']);
+    this.motoristaService.cadastrar(dados).subscribe(e => {
+      alert('Motorista salvo com sucesso!');
+      this.router.navigate(['/motoristas']);
+    })
+
   }
 }

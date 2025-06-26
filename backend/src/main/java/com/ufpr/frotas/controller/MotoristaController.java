@@ -1,5 +1,7 @@
 package com.ufpr.frotas.controller;
 
+import com.ufpr.frotas.dto.UsuarioAutenticadoDTO;
+import com.ufpr.frotas.dto.UsuarioCadastroDTO;
 import com.ufpr.frotas.dto.VeiculoRequestDTO;
 import com.ufpr.frotas.model.entity.Motorista;
 import com.ufpr.frotas.model.entity.Veiculo;
@@ -20,28 +22,29 @@ public class MotoristaController {
     private final MotoristaService motoristaService;
 
     @GetMapping
-    public ResponseEntity<List<Motorista>> listar() {
-        return ResponseEntity.ok(motoristaService.listarTodos());
+    public ResponseEntity<List<Motorista>> listar(@RequestParam(required = false) Boolean  ativo) {
+        return ResponseEntity.ok(motoristaService.listarTodos(ativo));
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Motorista> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(motoristaService.buscarPorId(id));
     }
 
-//    @PostMapping
-//    public ResponseEntity<Motorista> salvar(@RequestBody @Valid VeiculoRequestDTO dto) {
-//        return ResponseEntity.ok(motoristaService.salvar(dto));
-//    }
-//
+    @PostMapping
+    public ResponseEntity<UsuarioAutenticadoDTO> cadastrar(@RequestBody @Valid UsuarioCadastroDTO dto) {
+        return ResponseEntity.ok(motoristaService.cadastrar(dto));
+    }
+
 //    @PutMapping("/{id}")
 //    public ResponseEntity<Motorista> atualizar(@PathVariable Long id, @RequestBody @Valid VeiculoRequestDTO dto) {
 //        return ResponseEntity.ok(motoristaService.atualizar(id, dto));
 //    }
-//
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<Void> desativar(@PathVariable Long id) {
-//        motoristaService.desativar(id);
-//        return ResponseEntity.noContent().build();
-//    }
+
+    @PatchMapping("/{id}/inativar")
+    public ResponseEntity<Void> desativar(@PathVariable Long id) {
+        motoristaService.desativar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

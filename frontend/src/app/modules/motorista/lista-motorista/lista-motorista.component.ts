@@ -6,6 +6,8 @@ import { MatTableModule } from '@angular/material/table';
 import { Motorista } from '../../../models/motorista.model';
 import { Router } from '@angular/router';
 import { MotoristaService } from '../../../services/motorista.service';
+import { ConfirmDialogComponent } from '../../../shared/app-bar/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-lista-motorista',
@@ -18,32 +20,47 @@ export class ListaMotoristaComponent {
 
   displayedColumns = ['nome', 'telefone', 'email', 'ativo', 'acoes'];
 
-  constructor(private router: Router, private motoristaService: MotoristaService) { }
+  constructor(
+    private router: Router,
+    private motoristaService: MotoristaService,
+    private dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    this.carregarMotoristas();
-  }
+ngOnInit(): void {
+  this.carregarMotoristas();
+}
 
-  carregarMotoristas(): void {
-    this.motoristaService.listar().subscribe({
-      next: (dados) => {
-        this.motoristas = dados;
-      },
-      error: (erro) => {
-        console.error('Erro ao buscar motoristas:', erro);
-      }
-    });
-  }
+carregarMotoristas(): void {
+  this.motoristaService.listar({ativo: true}).subscribe({
+    next: (dados) => {
+      this.motoristas = dados;
+    },
+    error: (erro) => {
+      console.error('Erro ao buscar motoristas:', erro);
+    }
+  });
+}
 
-  cadastrar() {
-    this.router.navigate(['/motoristas/cadastrar']);
-  }
+cadastrar() {
+  this.router.navigate(['/motoristas/cadastrar']);
+}
 
-  editar(motorista: Motorista) {
-    this.router.navigate(['/motoristas/editar', motorista.id]);
-  }
+editar(motorista: Motorista) {
+  this.router.navigate(['/motoristas/editar', motorista.id]);
+}
 
-  inativar(motorista: Motorista): void {
-    this.motoristaService.inativar(motorista.id).subscribe(e => this.carregarMotoristas());
-  }
+inativar(motorista: Motorista): void {
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    width: '400px',
+    data: {
+      titulo: 'Confirmação',
+      mensagem: `Você concorda em remover o motorista ${motorista.nome}`
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.motoristaService.inativar(motorista.id).subscribe(e => this.carregarMotoristas());
+    }
+  });
+}
 }

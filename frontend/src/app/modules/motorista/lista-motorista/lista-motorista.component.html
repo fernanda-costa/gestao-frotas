@@ -32,7 +32,7 @@
         <button mat-icon-button color="primary" (click)="editar(m)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="inativar(m)">
+        <button *ngIf="m.ativo" mat-icon-button color="warn" (click)="inativar(m)">
           <mat-icon>block</mat-icon>
         </button>
       </td>

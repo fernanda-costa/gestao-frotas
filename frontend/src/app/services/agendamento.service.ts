@@ -8,12 +8,17 @@ import { S } from '@angular/cdk/keycodes';
 @Injectable({ providedIn: 'root' })
 export class AgendamentoService {
 
+
   private readonly API_URL = 'http://localhost:8080/api/agendamentos';
 
   constructor(private http: HttpClient) { }
 
   obterAgendamentosDoUsuario(motoristaId: number): Observable<Agendamento[]> {
     return this.http.get<Agendamento[]>(`${this.API_URL}/motorista/${motoristaId}`);
+  }
+
+  obterAgendamentosDoUsuarioConcluidos(motoristaId: number) {
+    return this.http.get<Agendamento[]>(`${this.API_URL}/motorista/${motoristaId}/concluidas`);
   }
 
   obterTodosAgendamentos(): Observable<Agendamento[]> {

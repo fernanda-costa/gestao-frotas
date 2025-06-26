@@ -3,7 +3,7 @@
 <mat-dialog-content>
   <h3>Informações do Agendamento</h3>
   <p><strong>Data/Hora Início:</strong> {{ agendamento.dataHoraInicio | date:'short' }}</p>
-  <p><strong>Veículo:</strong> {{ agendamento.veiculo }}</p>
+  <p><strong>Veículo:</strong> {{ agendamento.veiculo.placa }}</p>
   <p><strong>Destino:</strong> {{ agendamento.destino }}</p>
   <p><strong>Status Atual:</strong> {{ agendamento.status }}</p>
 

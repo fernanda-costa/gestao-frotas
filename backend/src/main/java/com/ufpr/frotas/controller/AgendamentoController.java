@@ -6,6 +6,7 @@ import com.ufpr.frotas.dto.FinalizarViagemDTO;
 import com.ufpr.frotas.dto.IniciarViagemRequestDTO;
 import com.ufpr.frotas.model.entity.Abastecimento;
 import com.ufpr.frotas.model.entity.Agendamento;
+import com.ufpr.frotas.model.enums.StatusAgendamento;
 import com.ufpr.frotas.service.AbastecimentoService;
 import com.ufpr.frotas.service.AgendamentoService;
 import jakarta.validation.Valid;
@@ -35,6 +36,11 @@ public class AgendamentoController {
     @GetMapping("/motorista/{id}")
     public ResponseEntity<List<Agendamento>> buscarPorMotoristaId(@PathVariable Long id) {
         return ResponseEntity.ok(agendamentoServiceService.buscarPorMotoristaId(id));
+    }
+
+    @GetMapping("/motorista/{id}/concluidas")
+    public ResponseEntity<List<Agendamento>> buscarPorMotoristaIdConcluidas(@PathVariable Long id) {
+        return ResponseEntity.ok(agendamentoServiceService.buscarPorMotoristaIdConcluidas(id, StatusAgendamento.FINALIZADO));
     }
 
     @PostMapping

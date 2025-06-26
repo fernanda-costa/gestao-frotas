@@ -16,7 +16,6 @@ public class UsuarioCadastroDTO {
 
     private String cpf;
     private CnhDTO cnh;
-    private String validadeCnh;
 
     private EnderecoDTO endereco;
 }

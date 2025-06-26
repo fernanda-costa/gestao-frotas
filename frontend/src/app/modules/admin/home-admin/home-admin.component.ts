@@ -37,22 +37,11 @@ export class HomeAdminComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Manutenção registrada:', result);
+
       }
     });
   }
 
-  // abrirModalManutencao() {
-  //   const dialogRef = this.dialog.open(RegistrarManutencaoModalComponent, {
-  //     width: '400px',
-  //     data: {}
-  //   });
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       console.log('Manutenção registrada:', result);
-  //     }
-  //   });
-  // }
 
 }

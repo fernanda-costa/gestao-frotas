@@ -5,8 +5,16 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Veículo</mat-label>
-      <mat-select formControlName="veiculo" required>
-        <mat-option *ngFor="let v of veiculos" [value]="v">{{ v }}</mat-option>
+      <mat-select formControlName="veiculoId">
+        <mat-option *ngFor="let v of veiculos" [value]="v.id">{{ v.modelo }} - {{ v.tipo}} / {{ v.ano
+          }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Motorista</mat-label>
+      <mat-select formControlName="motoristaId">
+        <mat-option *ngFor="let m of motoristas" [value]="m.id">{{ m.nome }}</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -20,7 +28,8 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Tipo de Combustível</mat-label>
       <mat-select formControlName="tipoCombustivel" required>
-        <mat-option *ngFor="let c of combustiveis" [value]="c">{{ c }}</mat-option>
+        <mat-option *ngFor="let c of combustiveis" [value]="c"> {{ c | titlecase }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -34,13 +43,8 @@
       <input matInput type="number" formControlName="quilometragem" required min="0" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Motorista</mat-label>
-      <input matInput formControlName="motorista" required />
-    </mat-form-field>
-
     <div class="actions">
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Salvar</button>
+      <button mat-raised-button color="primary" type="submit" (click)="salvar()">Salvar</button>
       <button mat-button type="button" (click)="cancelar()">Cancelar</button>
     </div>
   </form>

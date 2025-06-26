@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ManutencaoService } from '../../services/manutencao.service';
+import { TipoManutencao } from '../../models/manutencao.model';
 
 @Component({
   selector: 'app-registrar-manutencao-modal',
@@ -29,11 +31,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 export class RegistrarManutencaoModalComponent {
   form: FormGroup;
 
-  tipos = ['Preventiva', 'Corretiva'];
+  tipos = Object.keys(TipoManutencao).filter(key => isNaN(Number(key)));
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<RegistrarManutencaoModalComponent>,
+    private manutencaoService: ManutencaoService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.form = this.fb.group({
@@ -41,19 +44,22 @@ export class RegistrarManutencaoModalComponent {
       tipo: ['', Validators.required],
       descricao: ['', Validators.required],
       valor: [null, [Validators.required, Validators.min(0)]],
-      quilometragem: [null, [Validators.required, Validators.min(0)]]
+      quilometragem: [null, [Validators.required, Validators.min(0)]],
+      veiculoId: [],
     });
   }
 
   salvar() {
     if (this.form.invalid) return;
 
-    const manutencao = {
-      ...this.form.value,
-      statusVeiculo: 'Em Manutenção'  // sinalizando mudança de status
-    };
+    const manutencao = this.form.value;
+    manutencao.veiculoId = this.data.veiculoId;
 
-    this.dialogRef.close(manutencao);
+    this.manutencaoService.salvar(manutencao).subscribe(e => {
+      alert('Manutenção salva com sucesso');
+      this.dialogRef.close(manutencao);
+    })
+
   }
 
   cancelar() {

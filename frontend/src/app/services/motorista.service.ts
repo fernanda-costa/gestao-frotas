@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Usuario } from '../models/usuario.model';
 import { Motorista } from '../models/motorista.model';
 
@@ -10,10 +10,15 @@ import { Motorista } from '../models/motorista.model';
 export class MotoristaService {
   private readonly API_URL = 'http://localhost:8080/api/motoristas';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  listar(): Observable<Motorista[]> {
-    return this.http.get<Motorista[]>(this.API_URL);
+  listar(filtros?: { ativo?: boolean }): Observable<Motorista[]> {
+    let params = new HttpParams();
+    if (filtros?.ativo !== null && filtros?.ativo !== undefined) {
+      params = params.set('ativo', filtros.ativo);
+    }
+
+  return this.http.get<Motorista[]>(this.API_URL, { params });
   }
 
   buscarPorId(id: number): Observable<Motorista[]> {

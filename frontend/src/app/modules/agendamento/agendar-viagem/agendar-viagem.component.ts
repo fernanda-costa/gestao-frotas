@@ -55,7 +55,7 @@ export class AgendarViagemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.motoristaService.listar().subscribe(e => {
+    this.motoristaService.listar({ ativo: true }).subscribe(e => {
       this.motoristas = e;
     })
 

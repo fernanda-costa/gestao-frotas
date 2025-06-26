@@ -16,6 +16,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { Motorista } from '../../../models/motorista.model';
 import { MotoristaService } from '../../../services/motorista.service';
+import { RegistrarManutencaoModalComponent } from '../../registrar-manutencao-modal/registrar-manutencao-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-agendamentos',
@@ -48,6 +50,7 @@ export class AgendamentosComponent implements OnInit {
     private fb: FormBuilder,
     private agendamentosService: AgendamentoService,
     private motoristaService: MotoristaService,
+    private dialog: MatDialog
   ) {
     this.filtroForm = this.fb.group({
       motoristaId: [''],
@@ -75,17 +78,27 @@ export class AgendamentosComponent implements OnInit {
     });
   }
 
-  agendarViagem(ag: any) {
+  agendarViagem(ag: Agendamento) {
     console.log('Agendar viagem:', ag);
   }
 
-  registrarAbastecimento(ag: any) {
+  registrarAbastecimento(ag: Agendamento) {
     console.log('Registrar abastecimento:', ag);
   }
 
-  registrarManutencao(ag: any) {
-    console.log('Registrar manutenção:', ag);
+  registrarManutencao(ag: Agendamento) {
+    const dialogRef = this.dialog.open(RegistrarManutencaoModalComponent, {
+      width: '400px',
+      data: { veiculoId: ag.veiculo.id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Manutenção registrada:', result);
+      }
+    });
   }
+
 
   getStatusColor(status: string): 'primary' | 'accent' | 'warn' {
     switch (status) {

@@ -11,6 +11,8 @@ import { MatTableModule } from '@angular/material/table';
 import { Veiculo } from '../../../models/veiculo.models';
 import { VeiculoService } from '../../../services/veiculo.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../shared/app-bar/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-lista-veiculos',
@@ -30,7 +32,10 @@ export class ListaVeiculosComponent {
   displayedColumns: string[] = ['placa', 'modelo', 'tipo', 'ano', 'km', 'status', 'acoes'];
   veiculos: Veiculo[] = [];
 
-  constructor(private veiculoService: VeiculoService, private router: Router) { }
+  constructor(
+    private veiculoService: VeiculoService,
+    private router: Router,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.carregarVeiculos();
@@ -56,6 +61,18 @@ export class ListaVeiculosComponent {
   }
 
   inativar(veiculo: Veiculo): void {
-    this.veiculoService.inativar(veiculo.id).subscribe(e => this.carregarVeiculos());
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        titulo: 'Confirmação',
+        mensagem: `Você concorda em remover o veiculo ${veiculo.modelo}`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.veiculoService.inativar(veiculo.id).subscribe(e => this.carregarVeiculos());
+      }
+    });
   }
 }

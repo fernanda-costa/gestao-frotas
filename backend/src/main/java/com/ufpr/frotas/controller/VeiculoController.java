@@ -37,7 +37,7 @@ public class VeiculoController {
         return ResponseEntity.ok(veiculoService.atualizar(id, dto));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/inativar")
     public ResponseEntity<Void> desativar(@PathVariable Long id) {
         veiculoService.desativar(id);
         return ResponseEntity.noContent().build();

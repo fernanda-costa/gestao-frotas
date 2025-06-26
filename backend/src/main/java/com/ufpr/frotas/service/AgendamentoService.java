@@ -69,6 +69,10 @@ public class AgendamentoService {
         return agendamentoRepository.findByMotoristaIdOrderByDataHoraSaidaAsc(id);
     }
 
+    public List<Agendamento> buscarPorMotoristaIdConcluidas(Long id, StatusAgendamento finalizado) {
+        return agendamentoRepository.findByMotoristaIdAndStatus(id, finalizado);
+    }
+
     public Agendamento iniciarViagem(Long id, @Valid IniciarViagemRequestDTO dto) {
         Agendamento agendamento = buscarPorId(id);
 

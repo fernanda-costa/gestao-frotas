@@ -7,13 +7,13 @@
 
     <span class="spacer"></span>
 
-    <ng-container *ngIf="auth.tipoUsuario == 'ADMIN'">
+    <ng-container *ngIf="auth.perfilUsuario == 'ADMINISTRADOR'">
         <a mat-button routerLink="/viagem/agendar">Agendar Viagem</a>
         <a mat-button routerLink="/veiculos/gerenciar">Veículos</a>
         <a mat-button routerLink="/motoristas/gerenciar">Motoristas</a>
     </ng-container>
 
-    <ng-container *ngIf="auth.tipoUsuario == 'MOTORISTA'">
+    <ng-container *ngIf="auth.perfilUsuario == 'MOTORISTA'">
         <a mat-button routerLink="/viagem/agendar">Agendar Viagem</a>
         <a mat-button routerLink="/veiculos/gerenciar">Veículos</a>
         <a mat-button routerLink="/motoristas/gerenciar">Motoristas</a>
