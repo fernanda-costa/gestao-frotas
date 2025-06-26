@@ -23,7 +23,10 @@
 
     <ng-container matColumnDef="ativo">
       <th mat-header-cell *matHeaderCellDef> Ativo </th>
-      <td mat-cell *matCellDef="let m"> {{ m.ativo }} </td>
+      <td mat-cell *matCellDef="let m">
+        <mat-icon [class.ativo]="m.ativo" [class.inativo]="!m.ativo"  *ngIf="m.ativo">check_circle</mat-icon>
+        <mat-icon [class.ativo]="m.ativo" [class.inativo]="!m.ativo" *ngIf="!m.ativo">cancel</mat-icon>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="acoes">
