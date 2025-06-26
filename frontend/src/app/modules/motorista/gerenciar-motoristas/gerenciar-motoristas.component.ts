@@ -29,7 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class GerenciarMotoristasComponent {
 
   form: FormGroup;
-  index: number | null = null;
+  id: number | null = null;
   editando = false;
 
   constructor(
@@ -70,8 +70,8 @@ export class GerenciarMotoristasComponent {
     this.route.params.subscribe(params => {
       if (params['id'] !== undefined) {
         this.editando = true;
-        this.index = +params['id'];
-        this.carregarDados(this.index);
+        this.id = +params['id'];
+        this.carregarDados(this.id);
       }
     });
   }
@@ -80,6 +80,8 @@ export class GerenciarMotoristasComponent {
     this.motoristaService.buscarPorId(id).subscribe(m => {
       console.log(m);
       this.form.patchValue(m);
+      this.form.controls["email"].disable()
+      this.form.controls["senha"].disable()
     })
 
   }
@@ -118,12 +120,19 @@ export class GerenciarMotoristasComponent {
   salvar() {
     if (this.form.invalid) return;
 
-    const dados = this.form.value;
+    const dados = this.form.getRawValue();
 
-    this.motoristaService.cadastrar(dados).subscribe(e => {
+     if (this.editando) {
+    this.motoristaService.editar(this.id!, dados).subscribe(() => {
+      alert('Motorista atualizado com sucesso!');
+      this.router.navigate(['/motoristas']);
+    });
+  } else {
+    this.motoristaService.cadastrar(dados).subscribe(() => {
       alert('Motorista salvo com sucesso!');
       this.router.navigate(['/motoristas']);
-    })
+    });
+  }
 
   }
 }

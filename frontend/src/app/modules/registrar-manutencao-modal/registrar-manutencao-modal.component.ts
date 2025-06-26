@@ -7,9 +7,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { ManutencaoService } from '../../services/manutencao.service';
 import { TipoManutencao } from '../../models/manutencao.model';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { MAT_DATE_LOCALE, DateAdapter, NativeDateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-registrar-manutencao-modal',
@@ -23,8 +24,14 @@ import { TipoManutencao } from '../../models/manutencao.model';
     MatSelectModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    NgxMaskDirective,
   ],
+  providers: [
+    provideNgxMask(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    provideNativeDateAdapter(),
+  ],
+  
   templateUrl: './registrar-manutencao-modal.component.html',
   styleUrls: ['./registrar-manutencao-modal.component.scss']
 })

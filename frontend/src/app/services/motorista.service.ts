@@ -8,6 +8,7 @@ import { Motorista } from '../models/motorista.model';
   providedIn: 'root'
 })
 export class MotoristaService {
+
   private readonly API_URL = 'http://localhost:8080/api/motoristas';
 
   constructor(private http: HttpClient) { }

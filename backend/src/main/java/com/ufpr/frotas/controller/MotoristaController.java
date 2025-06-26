@@ -37,10 +37,10 @@ public class MotoristaController {
         return ResponseEntity.ok(motoristaService.cadastrar(dto));
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Motorista> atualizar(@PathVariable Long id, @RequestBody @Valid VeiculoRequestDTO dto) {
-//        return ResponseEntity.ok(motoristaService.atualizar(id, dto));
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioAutenticadoDTO> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioCadastroDTO dto) {
+        return ResponseEntity.ok(motoristaService.atualizar(id, dto));
+    }
 
     @PatchMapping("/{id}/inativar")
     public ResponseEntity<Void> desativar(@PathVariable Long id) {

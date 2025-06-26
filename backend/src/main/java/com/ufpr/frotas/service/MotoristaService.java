@@ -6,6 +6,7 @@ import com.ufpr.frotas.model.entity.*;
 import com.ufpr.frotas.model.enums.PerfilUsuario;
 import com.ufpr.frotas.repository.MotoristaRepository;
 import com.ufpr.frotas.repository.UsuarioRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,7 @@ public class MotoristaService {
 
             Motorista motorista = new Motorista();
             motorista.setPerfil(PerfilUsuario.MOTORISTA);
+        motorista.setCpf(dto.getCpf());
 
             if (dto.getCnh() != null) {
                 Cnh cnh = new Cnh();
@@ -99,5 +101,54 @@ public class MotoristaService {
         );
     }
 
+    public UsuarioAutenticadoDTO atualizar(Long id, @Valid UsuarioCadastroDTO dto) {
+        Motorista motorista = motoristaRepository.findById(id).orElseThrow(() -> new RuntimeException("Motorista não encontrada"));
+        Usuario usuario = usuarioRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new RuntimeException("Usuario não encontrada"));
+
+        if (dto.getCnh() != null) {
+            Cnh cnh = new Cnh();
+            cnh.setNumCnh(dto.getCnh().getNumCnh());
+            cnh.setCategoria(dto.getCnh().getCategoria());
+            cnh.setDataEmissao(dto.getCnh().getDataEmissao());
+
+            try {
+                if (dto.getCnh().getValidade() != null) {
+                    cnh.setValidade(dto.getCnh().getValidade());
+                }
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("Data de validade da CNH inválida. Use formato yyyy-MM-dd.");
+            }
+
+            cnh.setOrgaoEmissor(dto.getCnh().getOrgaoEmissor());
+            motorista.setCnh(cnh);
+        }
+
+        if (dto.getEndereco() != null) {
+            Endereco endereco = new Endereco();
+            endereco.setLogradouro(dto.getEndereco().getLogradouro());
+            endereco.setNumero(dto.getEndereco().getNumero());
+            endereco.setComplemento(dto.getEndereco().getComplemento());
+            endereco.setBairro(dto.getEndereco().getBairro());
+            endereco.setCidade(dto.getEndereco().getCidade());
+            endereco.setEstado(dto.getEndereco().getEstado());
+            endereco.setCep(dto.getEndereco().getCep());
+            motorista.setEndereco(endereco);
+        }
+
+        motorista.setCpf(dto.getCpf());
+
+        usuario = motorista;
+
+        usuario.setNome(dto.getNome());
+        usuario.setTelefone(dto.getTelefone());
+        Usuario salvo = usuarioRepository.save(usuario);
+
+        return new UsuarioAutenticadoDTO(
+                salvo.getId(),
+                salvo.getNome(),
+                salvo.getEmail(),
+                salvo.getPerfil()
+        );
+    }
 }
 

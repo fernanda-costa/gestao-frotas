@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Registrar Abastecimento</h2>
 <mat-dialog-content>
 
-  <form [formGroup]="form" (ngSubmit)="salvar()" class="form">
+  <form [formGroup]="form" class="form">
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Veículo</mat-label>
@@ -35,7 +35,8 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Valor</mat-label>
-      <input matInput type="number" formControlName="valor" required min="0" step="0.01" />
+      <input matInput formControlName="valor" mask="separator.2" thousandSeparator="." decimalMarker="," prefix="R$ "
+        required />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">

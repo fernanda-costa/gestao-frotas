@@ -7,13 +7,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule, NativeDateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { MotoristaService } from '../../services/motorista.service';
 import { VeiculoService } from '../../services/veiculo.service';
 import { Motorista } from '../../models/motorista.model';
 import { Veiculo } from '../../models/veiculo.models';
 import { AbastecimentoService } from '../../services/abastecimento.service';
 import { TipoCombustivel } from '../../models/abastecimento.model';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-registrar-abastecimento-modal',
@@ -27,7 +28,13 @@ import { TipoCombustivel } from '../../models/abastecimento.model';
     MatSelectModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgxMaskDirective
+  ],
+  providers: [
+    provideNgxMask(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    provideNativeDateAdapter(),
   ],
   templateUrl: './registrar-abastecimento-modal.component.html',
   styleUrls: ['./registrar-abastecimento-modal.component.scss']
@@ -73,9 +80,8 @@ export class RegistrarAbastecimentoModalComponent implements OnInit {
     const abastecimento = this.form.value;
 
     this.abastecimentoService.salvar(abastecimento).subscribe(e => {
-      alert('Abastecimento salvo com sucesso');
-
       this.dialogRef.close(this.form.value);
+      alert('Abastecimento salvo com sucesso');
     })
   }
 

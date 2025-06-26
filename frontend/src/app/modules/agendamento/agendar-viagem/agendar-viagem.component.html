@@ -15,11 +15,20 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Data e Hora de Saída</mat-label>
-            <input matInput type="datetime-local" formControlName="dataHoraSaida">
-        </mat-form-field>
+        <div class="date-time-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Data</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="data">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
 
+            <mat-form-field appearance="outline">
+                <mat-label>Hora</mat-label>
+                <input matInput type="time" formControlName="hora">
+            </mat-form-field>
+        </div>
+        
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Destino</mat-label>
             <input matInput formControlName="destino">

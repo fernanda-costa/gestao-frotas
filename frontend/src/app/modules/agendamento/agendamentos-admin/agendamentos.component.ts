@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core'; // necessário para datepicker funcionar com native date
+import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule, NativeDateAdapter } from '@angular/material/core'; // necessário para datepicker funcionar com native date
 import { MatIconModule } from '@angular/material/icon'; // se quiser ícones
 import { AgendamentoService } from '../../../services/agendamento.service';
 import { Agendamento } from '../../../models/agendamento.model';
@@ -37,6 +37,10 @@ import { RegistrarAbastecimentoModalComponent } from '../../registrar-abastecime
     MatIconModule,
     MatChipsModule,
     MatCardModule
+  ],
+    providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: DateAdapter, useClass: NativeDateAdapter },
   ],
   templateUrl: './agendamentos.component.html',
   styleUrls: ['./agendamentos.component.scss']
@@ -103,10 +107,7 @@ export class AgendamentosComponent implements OnInit {
           width: '800px',
           data: {}
         });
-    
-        dialogRef.afterClosed().subscribe(result => {
-    
-        });
+
   }
 
   registrarManutencao(ag: Agendamento) {

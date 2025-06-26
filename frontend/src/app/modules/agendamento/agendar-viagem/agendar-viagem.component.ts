@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule, NativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +29,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatNativeDateModule,
     MatIconModule
   ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: DateAdapter, useClass: NativeDateAdapter },
+  ],
   templateUrl: './agendar-viagem.component.html',
   styleUrl: './agendar-viagem.component.scss'
 })
@@ -47,7 +51,8 @@ export class AgendarViagemComponent implements OnInit {
     this.form = this.fb.group({
       veiculoId: ['', Validators.required],
       motoristaId: ['', Validators.required],
-      dataHoraSaida: ['', Validators.required],
+      data: ['', Validators.required],
+      hora: ['', Validators.required],
       destino: ['', Validators.required],
       justificativa: ['', Validators.required],
       status: ['AGENDADO']
@@ -66,7 +71,20 @@ export class AgendarViagemComponent implements OnInit {
 
   salvar() {
     if (this.form.valid) {
-      const dados = this.form.value;
+      var dados = this.form.value;
+      const [horas, minutos] = dados.hora.split(':').map(Number);
+
+      const dataOriginal = new Date(dados.data);
+      const dataHoraSaida = new Date(
+        dataOriginal.getFullYear(),
+        dataOriginal.getMonth(),
+        dataOriginal.getDate(),
+        horas,
+        minutos
+      );
+
+      dados.dataHoraSaida = dataHoraSaida.toISOString();
+
       console.log('Agendamento salvo:', dados);
 
       this.agendamentoService.salvar(dados).subscribe(e => {

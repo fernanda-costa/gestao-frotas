@@ -39,9 +39,7 @@ export class HomeAdminComponent {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
 
-    });
   }
 
 
