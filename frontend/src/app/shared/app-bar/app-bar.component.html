@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="app-toolbar">
 
-    <a routerLink="/admin" class="app-logo-link">
+    <a [routerLink]="tipoPerfil == 'AMINISTRADOR' ? '/admin' : '/motorista'" class="app-logo-link">
         <mat-icon class="app-icon">directions_bus</mat-icon>
         <span class="app-title">Gestão de Frotas</span>
     </a>

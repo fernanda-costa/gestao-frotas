@@ -20,7 +20,11 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AppBarComponent {
 
-  constructor(public auth: AuthService, private router: Router) { }
+  tipoPerfil;
+
+  constructor(public auth: AuthService, private router: Router) {
+    this.tipoPerfil = this.auth.perfilUsuario;
+  }
 
   logout() {
     this.auth.logout();
